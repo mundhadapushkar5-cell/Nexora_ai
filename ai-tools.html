@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Nexora AI Tools</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        NEXORA AI
+    </div>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="ai-tools.html">
+            AI Tools
+        </a>
+
+        <a href="index.html#courses">
+            Courses
+        </a>
+
+        <a href="index.html#pricing">
+            Pricing
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="index.html#auth">
+            Login
+        </a>
+
+        <a href="index.html#contact">
+            Contact
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="tools-hero">
+
+    <h1>
+        AI Tools Hub
+    </h1>
+
+    <p>
+        Discover powerful AI tools for work,
+        creativity, coding and business.
+    </p>
+
+</section>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<section class="tool-search">
+
+    <input
+        type="text"
+        id="toolSearch"
+        placeholder="🔍 Search AI tools..."
+        onkeyup="searchTools()">
+
+</section>
+
+
+<!-- =========================
+     CATEGORIES
+========================= -->
+
+<div class="categories">
+
+    <button onclick="filterTools('all')">
+        All
+    </button>
+
+    <button onclick="filterTools('chat')">
+        💬 AI Chat
+    </button>
+
+    <button onclick="filterTools('image')">
+        🎨 AI Image
+    </button>
+
+    <button onclick="filterTools('video')">
+        🎬 AI Video
+    </button>
+
+    <button onclick="filterTools('coding')">
+        💻 AI Coding
+    </button>
+
+</div>
+
+
+<!-- =========================
+     AI TOOLS
+========================= -->
+
+<section class="tools-grid">
+
+
+    <!-- TOOL 1 -->
+
+    <div
+        class="tool-card"
+        data-category="chat"
+        data-name="chatgpt">
+
+        <div class="tool-icon">
+            🤖
+        </div>
+
+        <h2>
+            ChatGPT
+        </h2>
+
+        <p>
+            AI assistant for questions,
+            writing and productivity.
+        </p>
+
+        <button
+            onclick="openTool('ChatGPT')">
+
+            Open Tool
+
+        </button>
+
+    </div>
+
+
+    <!-- TOOL 2 -->
+
+    <div
+        class="tool-card"
+        data-category="chat"
+        data-name="gemini">
+
+        <div class="tool-icon">
+            ✨
+        </div>
+
+        <h2>
+            Gemini
+        </h2>
+
+        <p>
+            AI assistant for research,
+            ideas and creativity.
+        </p>
+
+        <button
+            onclick="openTool('Gemini')">
+
+            Open Tool
+
+        </button>
+
+    </div>
+
+
+    <!-- TOOL 3 -->
+
+    <div
+        class="tool-card"
+        data-category="image"
+        data-name="ai image image generator">
+
+        <div class="tool-icon">
+            🎨
+        </div>
+
+        <h2>
+            AI Image
+        </h2>
+
+        <p>
+            Generate creative images
+            using artificial intelligence.
+        </p>
+
+        <button
+            onclick="openTool('AI Image')">
+
+            Open Tool
+
+        </button>
+
+    </div>
+
+
+    <!-- TOOL 4 -->
+
+    <div
+        class="tool-card"
+        data-category="video"
+        data-name="ai video video generator">
+
+        <div class="tool-icon">
+            🎬
+        </div>
+
+        <h2>
+            AI Video
+        </h2>
+
+        <p>
+            Create videos using
+            powerful AI technology.
+        </p>
+
+        <button
+            onclick="openTool('AI Video')">
+
+            Open Tool
+
+        </button>
+
+    </div>
+
+
+    <!-- TOOL 5 -->
+
+    <div
+        class="tool-card"
+        data-category="coding"
+        data-name="ai coding code generator">
+
+        <div class="tool-icon">
+            💻
+        </div>
+
+        <h2>
+            AI Coding
+        </h2>
+
+        <p>
+            Build websites and applications
+            with AI assistance.
+        </p>
+
+        <button
+            onclick="openTool('AI Coding')">
+
+            Open Tool
+
+        </button>
+
+    </div>
+
+
+    <!-- TOOL 6 -->
+
+    <div
+        class="tool-card"
+        data-category="image"
+        data-name="ai logo logo maker">
+
+        <div class="tool-icon">
+            🔥
+        </div>
+
+        <h2>
+            AI Logo Maker
+        </h2>
+
+        <p>
+            Create professional logos
+            for your brand using AI.
+        </p>
+
+        <button
+            onclick="openTool('AI Logo Maker')">
+
+            Open Tool
+
+        </button>
+
+    </div>
+
+
+</section>
+
+
+<!-- =========================
+     TOOL POPUP
+========================= -->
+
+<div
+    id="toolPopup"
+    class="popup">
+
+    <div class="popup-box">
+
+        <span
+            class="close"
+            onclick="closeTool()">
+
+            ×
+
+        </span>
+
+        <div
+            id="popupIcon"
+            class="popup-icon">
+
+            🤖
+
+        </div>
+
+        <h2 id="popupTitle">
+            AI Tool
+        </h2>
+
+        <p id="popupDescription">
+
+            This AI tool will be
+            connected to Nexora soon.
+
+        </p>
+
+        <button
+            onclick="closeTool()">
+
+            Got It
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div>
+
+            <h2>
+                NEXORA AI
+            </h2>
+
+            <p>
+                One Platform For Every AI Tool.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="ai-tools.html">
+                AI Tools
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Support
+            </h3>
+
+            <a href="#">
+                Help Center
+            </a>
+
+            <a href="#">
+                Contact
+            </a>
+
+            <a href="#">
+                Privacy
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <hr>
+
+    <p class="copyright">
+
+        © 2026 Nexora AI.
+        All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+<!-- JAVASCRIPT -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
