@@ -2049,3 +2049,157 @@ color:#94a3b8;
     }
 
 }
+
+/* Accessibility, layout stability and mobile navigation fixes */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #0f172a;
+  color: #f8fafc;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+img, video, iframe {
+  max-width: 100%;
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input, textarea {
+  font: inherit;
+}
+
+button, .btn-primary, .btn-secondary {
+  touch-action: manipulation;
+}
+
+header.navbar {
+  box-sizing: border-box;
+  gap: 18px;
+}
+
+header.navbar nav {
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+header.navbar nav a {
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.banner {
+  min-height: 420px;
+  box-sizing: border-box;
+}
+
+.banner-text {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.banner-text h1 {
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+
+.banner-image {
+  flex: 0 1 280px;
+}
+
+.tools-grid, .feature-grid, .courses-grid, .pricing-grid, .quick-grid {
+  box-sizing: border-box;
+}
+
+.tool-card, .feature-card, .course-card, .price-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+input, textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 760px) {
+  header.navbar {
+    position: sticky;
+    top: 0;
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  header.navbar nav {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 8px 14px;
+  }
+
+  header.navbar nav a {
+    font-size: 14px;
+  }
+
+  .banner {
+    padding: 64px 22px;
+    min-height: auto;
+    gap: 24px;
+  }
+
+  .banner-text h1 {
+    font-size: clamp(30px, 8vw, 44px);
+  }
+
+  .banner-image {
+    margin: 0 auto;
+    font-size: 90px;
+  }
+
+  .features, .tools-section, .courses-section, .pricing, .contact {
+    padding: 56px 18px;
+  }
+
+  .features h2, .courses-section h2, .pricing h2, .contact h2 {
+    font-size: clamp(27px, 6vw, 36px);
+  }
+
+  .tools-grid {
+    padding: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  }
+
+  .auth-section {
+    min-height: auto;
+    padding: 56px 18px;
+  }
+
+  .auth-box {
+    padding: 24px;
+  }
+
+  .footer-container {
+    gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
