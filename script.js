@@ -1,410 +1,129 @@
-function login(){
-    alert("Welcome to Nexora AI 🚀");
-}
+/* Nexora AI — shared static-site interactions.
+   This is a front-end demo; authentication, payments and AI APIs are not connected. */
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const show = (el, display = "block") => { if (el) el.style.display = display; };
 
-document.querySelectorAll("button").forEach(button=>{
-    button.addEventListener("click",()=>{
-        console.log(button.innerText+" clicked");
+  // Search works on both the home page and the dedicated tools page.
+  function searchCards(inputId, selector, getText) {
+    const input = $(inputId);
+    if (!input) return;
+    const apply = () => {
+      const query = input.value.trim().toLowerCase();
+      document.querySelectorAll(selector).forEach((card) => {
+        const text = (getText ? getText(card) : card.innerText).toLowerCase();
+        card.style.display = text.includes(query) ? "" : "none";
+      });
+    };
+    input.addEventListener("input", apply);
+  }
+
+  searchCards("toolSearch", ".tool-card", (card) =>
+    [card.innerText, card.dataset.name || "", card.dataset.category || ""].join(" "));
+  searchCards("courseSearch", ".course-card");
+
+  window.filterTools = (category) => {
+    document.querySelectorAll(".tool-card").forEach((card) => {
+      const matches = category === "all" || card.dataset.category === category;
+      card.style.display = matches ? "" : "none";
     });
-});
-console.log("Day 12 Loaded Successfully 🚀");
-document.querySelectorAll(".dashboard-card button").forEach(button=>{
+  };
 
-button.addEventListener("click",()=>{
+  window.filterCourses = (category) => {
+    document.querySelectorAll(".course-card").forEach((card) => {
+      card.style.display =
+        category === "all" || card.dataset.category === category ? "" : "none";
+    });
+  };
 
-alert("This AI Tool will be available soon 🚀");
+  const toolLinks = {
+    "ChatGPT": "https://chatgpt.com/",
+    "AI Chat": "https://chatgpt.com/",
+    "Gemini": "https://gemini.google.com/",
+    "AI Image": "https://www.google.com/search?q=AI+image+generator",
+    "AI Video": "https://www.google.com/search?q=AI+video+generator",
+    "AI Coding": "https://github.com/features/copilot",
+    "AI Logo Maker": "https://www.google.com/search?q=AI+logo+maker",
+    "AI Assistant": "https://chatgpt.com/"
+  };
 
-});
-
-});
-document.querySelectorAll(".price-card button").forEach(button=>{
-
-button.addEventListener("click",()=>{
-
-alert("Payment System Coming Soon 💳");
-
-});
-
-});
-document.querySelector(".explore-btn")?.addEventListener("click",function(){
-
-alert("Welcome to Nexora AI 🚀");
-
-});
-function openPopup(){
-
-document.getElementById("loginPopup").style.display="flex";
-
-}
-
-function closePopup(){
-
-document.getElementById("loginPopup").style.display="none";
-
-}
-const statCards = document.querySelectorAll(".stat-card");
-
-statCards.forEach(card=>{
-
-card.addEventListener("click",()=>{
-
-alert("More analytics coming soon 📊");
-
-});
-
-});
-console.log("Nexora AI Footer Loaded Successfully 🚀");
-/* AI Tools Search */
-
-const searchInput = document.getElementById("toolSearch");
-
-if (searchInput) searchInput.addEventListener("input", function () {
-
-  const searchText = this.value.toLowerCase();
-
-  const cards = document.querySelectorAll(".tool-card");
-
-  cards.forEach(function (card) {
-
-    const text = card.innerText.toLowerCase();
-
-    if (text.includes(searchText)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
+  function showToolPopup(name, icon = "🤖", description) {
+    if ($("popupTitle")) $("popupTitle").textContent = name;
+    if ($("popupIcon")) $("popupIcon").textContent = icon;
+    if ($("popupDescription")) {
+      $("popupDescription").textContent = description ||
+        (toolLinks[name] ? "Open this tool on its official website." :
+          "This feature is a demo and is not connected yet.");
     }
+    show($("toolPopup"), "flex");
+    show($("loginPopup"), "none");
+  }
 
+  window.openTool = (name) => showToolPopup(name);
+  window.showTool = (name, icon, description) => showToolPopup(name, icon, description);
+  window.closeTool = () => show($("toolPopup"), "none");
+  window.closeToolPopup = window.closeTool;
+  window.useTool = () => {
+    const name = $("popupTitle")?.textContent || "AI Assistant";
+    const url = toolLinks[name];
+    if (url) window.open(url, "_blank", "noopener,noreferrer");
+    else alert("This feature is not connected yet.");
+  };
+
+  window.openDashboardTool = (name) => {
+    const url = toolLinks[name] || "ai-tools.html";
+    window.location.href = url === "ai-tools.html" ? url : url;
+  };
+
+  window.openPopup = () => show($("loginPopup"), "flex");
+  window.closePopup = () => show($("loginPopup"), "none");
+
+  window.showLogin = () => {
+    show($("loginForm"));
+    show($("signupForm"), "none");
+    document.querySelectorAll(".auth-tab").forEach((tab, i) =>
+      tab.classList.toggle("active", i === 0));
+  };
+  window.showSignup = () => {
+    show($("loginForm"), "none");
+    show($("signupForm"));
+    document.querySelectorAll(".auth-tab").forEach((tab, i) =>
+      tab.classList.toggle("active", i === 1));
+  };
+
+  window.togglePassword = (id) => {
+    const input = $(id);
+    if (input) input.type = input.type === "password" ? "text" : "password";
+  };
+
+  window.loginUser = () => {
+    const email = $("loginEmail")?.value.trim();
+    const password = $("loginPassword")?.value;
+    if (!email || !password) return alert("Please enter your email and password.");
+    alert("This is a front-end demo only. Real account login is not enabled yet.");
+  };
+
+  window.signupUser = () => {
+    const name = $("signupName")?.value.trim();
+    const email = $("signupEmail")?.value.trim();
+    const password = $("signupPassword")?.value;
+    if (!name || !email || !password) return alert("Please fill in all fields.");
+    alert("This is a front-end demo only. Account creation and data storage are not enabled yet.");
+  };
+
+  window.buyCourse = (courseName) =>
+    alert(courseName + " selected. Online payment is not enabled on this demo site.");
+
+  // Legacy popup close buttons and escape key.
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      show($("toolPopup"), "none");
+      show($("loginPopup"), "none");
+    }
   });
 
-});
-
-
-/* Category Filter */
-
-function filterTools(category) {
-
-  const cards = document.querySelectorAll(".tool-card");
-
-  cards.forEach(function (card) {
-
-    if (
-      category === "all" ||
-      card.dataset.category === category
-    ) {
-
-      card.style.display = "block";
-
-    } else {
-
-      card.style.display = "none";
-
-    }
-
+  // Remove the old generic click handlers that caused duplicate alerts.
+  document.querySelectorAll(".dashboard-card button").forEach((button) => {
+    button.onclick = () => { window.location.href = "ai-tools.html"; };
   });
-
-}
-
-
-/* Open Tool */
-
-function openTool(toolName) {
-
-  alert(
-    toolName +
-    " is coming soon 🚀"
-  );
-
-}
-function showTool(name, icon, description) {
-
-  document.getElementById("popupTitle").innerText = name;
-
-  document.getElementById("popupIcon").innerText = icon;
-
-  document.getElementById("popupDescription").innerText = description;
-
-  document.getElementById("toolPopup").style.display = "flex";
-
-}
-
-
-function closeToolPopup() {
-
-  document.getElementById("toolPopup").style.display = "none";
-
-}
-
-
-function useTool() {
-
-  alert("This AI Tool will be connected soon 🚀");
-
-}
-/* COURSE SEARCH */
-
-const courseSearch =
-    document.getElementById("courseSearch");
-
-if (courseSearch) {
-
-    courseSearch.addEventListener("input", function () {
-
-        const searchText =
-            this.value.toLowerCase();
-
-        const courses =
-            document.querySelectorAll(".course-card");
-
-        courses.forEach(function (course) {
-
-            const text =
-                course.innerText.toLowerCase();
-
-            if (text.includes(searchText)) {
-
-                course.style.display = "block";
-
-            } else {
-
-                course.style.display = "none";
-
-            }
-
-        });
-
-    });
-
-}
-
-
-/* COURSE FILTER */
-
-function filterCourses(category) {
-
-    const courses =
-        document.querySelectorAll(".course-card");
-
-    courses.forEach(function (course) {
-
-        if (
-            category === "all" ||
-            course.dataset.category === category
-        ) {
-
-            course.style.display = "block";
-
-        } else {
-
-            course.style.display = "none";
-
-        }
-
-    });
-
-}
-
-
-/* COURSE BUTTON */
-
-function buyCourse(courseName) {
-
-    alert(
-        courseName +
-        " selected! Payment system coming soon 💳"
-    );
-
-}
-/* SHOW LOGIN */
-
-function showLogin() {
-
-    document.getElementById("loginForm")
-        .style.display = "block";
-
-    document.getElementById("signupForm")
-        .style.display = "none";
-
-}
-
-
-/* SHOW SIGNUP */
-
-function showSignup() {
-
-    document.getElementById("loginForm")
-        .style.display = "none";
-
-    document.getElementById("signupForm")
-        .style.display = "block";
-
-}
-
-
-/* PASSWORD SHOW / HIDE */
-
-function togglePassword(id) {
-
-    const password =
-        document.getElementById(id);
-
-    if (password.type === "password") {
-
-        password.type = "text";
-
-    } else {
-
-        password.type = "password";
-
-    }
-
-}
-
-
-/* LOGIN DEMO */
-
-function loginUser() {
-
-    const email =
-        document.getElementById("loginEmail").value;
-
-    const password =
-        document.getElementById("loginPassword").value;
-
-    if (email === "" || password === "") {
-
-        alert("Please fill all fields.");
-
-        return;
-
-    }
-
-    alert(
-        "Login successful! 🚀\n\n" +
-        "Backend authentication will be connected later."
-    );
-
-}
-
-
-/* SIGNUP DEMO */
-
-function signupUser() {
-
-    const name =
-        document.getElementById("signupName").value;
-
-    const email =
-        document.getElementById("signupEmail").value;
-
-    const password =
-        document.getElementById("signupPassword").value;
-
-    if (
-        name === "" ||
-        email === "" ||
-        password === ""
-    ) {
-
-        alert("Please fill all fields.");
-
-        return;
-
-    }
-
-    alert(
-        "Account created successfully! 🎉\n\n" +
-        "Database will be connected later."
-    );
-
-}
-function openDashboardTool(toolName) {
-
-    alert(
-        toolName +
-        " will open here soon 🚀"
-    );
-
-}
-// =========================
-// NEXORA AI TOOLS
-// =========================
-
-
-// OPEN TOOL
-
-function openTool(toolName) {
-
-    document.getElementById("popupTitle").innerText =
-        toolName;
-
-    document.getElementById("toolPopup").style.display =
-        "flex";
-}
-
-
-// CLOSE TOOL
-
-function closeTool() {
-
-    document.getElementById("toolPopup").style.display =
-        "none";
-}
-
-
-// SEARCH TOOLS
-
-function searchTools() {
-
-    let search =
-        document.getElementById("toolSearch")
-        .value
-        .toLowerCase();
-
-    let tools =
-        document.querySelectorAll(".tool-card");
-
-    tools.forEach(function(tool) {
-
-        let name =
-            tool.dataset.name;
-
-        if (name.includes(search)) {
-
-            tool.style.display = "block";
-
-        } else {
-
-            tool.style.display = "none";
-
-        }
-
-    });
-
-}
-
-
-// FILTER TOOLS
-
-function filterTools(category) {
-
-    let tools =
-        document.querySelectorAll(".tool-card");
-
-    tools.forEach(function(tool) {
-
-        if (
-            category === "all" ||
-            tool.dataset.category === category
-        ) {
-
-            tool.style.display = "block";
-
-        } else {
-
-            tool.style.display = "none";
-
-        }
-
-    });
-
-}
+})();
