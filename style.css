@@ -2203,3 +2203,15 @@ input, textarea {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Keep the fixed desktop header from covering the tools-page heading. */
+.tools-hero {
+  padding-top: 140px;
+}
+
+@media (max-width: 760px) {
+  .tools-hero {
+    padding-top: 34px;
+  }
+}
